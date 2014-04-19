@@ -14,13 +14,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+__author__ = 'Aneesh Neelam <neelam.aneesh@gmail.com>'
+
 import webapp2
 
-class MainHandler(webapp2.RequestHandler):
-    def get(self):
-        self.response.write('Second Test')
+import Handlers
 
 
 app = webapp2.WSGIApplication([
-    ('/', MainHandler)
-], debug=True)
+                                  ('/status', Handlers.StatusHandler),
+                                  ('/', Handlers.LoginHandler),
+                                  ('/register', Handlers.RegistrationHandler),
+                                  ('/customer', Handlers.CustomerPortal),
+                                  ('/staff', Handlers.StaffPortal),
+                                  ('/admin', Handlers.ManagerPortal)
+                              ], debug=True)
