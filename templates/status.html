@@ -2,19 +2,21 @@
 <html>
 <head>
     <meta charset="UTF-8"/>
-    <meta name="author" content="Aneesh Neelam, 11BCE0260"/>
-    <link href="/static/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
-    <link rel="stylesheet" type="text/css" href="/stylesheets/status.css"/>
     <title>{{title}}</title>
+    <meta name="author" content="{{author}}"/>
+    <link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/status.css"/>
 </head>
 <body id="body">
 <div class="header">
     <h1>Welcome to {{title}}</h1>
 </div>
-<h4>Running on Google App Engine <br>
-    Server status: {{status}} </h4>
-<label>Last Updated: {{update}}</label>
-<br><br>
+<div class="content">
+    <h4>Running on {{engine}} <br> <br>
+        Server status: {{status}} </h4>
+    <br> <br>
+    <label>Last Updated: {{lastupdated}}</label>
+</div>
 <footer id="footer">
     Copyright &copy; 2014, {{author}}
 </footer>
