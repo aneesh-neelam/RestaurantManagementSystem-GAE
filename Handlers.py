@@ -1,4 +1,10 @@
 __author__ = 'Aneesh Neelam <neelam.aneesh@gmail.com>'
+footerAuthor = 'Aneesh Neelam (11BCE0260)'
+authorEmail = 'neelam.aneesh@gmail.com'
+SystemName = 'Restaurant Management System'
+EngineName = 'Google App Engine'
+lastUpdated = '21st April, 2014'
+ServerStatus = 'OK'
 
 import os
 
@@ -14,17 +20,16 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 class StatusHandler(webapp2.RequestHandler):
     def get(self):
-        title = 'Restaurant Management System'
-        status = 'OK'
-        lastupdated = '20th April, 2014'
-        engine = 'Google App Engine'
-
+        statusHeadTitle = 'Status | Restaurant Management System'
         template_values = {
-            'title': title,
-            'author': __author__,
-            'engine': engine,
-            'status': status,
-            'lastupdated': lastupdated
+            'HeadTitle': statusHeadTitle,
+            'HeadAuthor': __author__,
+            'SystemName': SystemName,
+            'EngineName': EngineName,
+            'ServerStatus': ServerStatus,
+            'lastUpdated': lastUpdated,
+            'FooterAuthor': footerAuthor,
+            'AuthorEmail': authorEmail
         }
 
         template = JINJA_ENVIRONMENT.get_template('templates/status.html')
@@ -33,10 +38,13 @@ class StatusHandler(webapp2.RequestHandler):
 
 class LoginHandler(webapp2.RequestHandler):
     def get(self):
-        title = 'Restaurant Management System - Login'
+        loginHeadTitle = 'Login | Restaurant Management System'
         template_values = {
-            'title': title,
-            'author': __author__,
+            'HeadTitle': loginHeadTitle,
+            'HeadAuthor': __author__,
+            'SystemName': SystemName,
+            'FooterAuthor': footerAuthor,
+            'AuthorEmail': authorEmail
         }
 
         template = JINJA_ENVIRONMENT.get_template('templates/index.html')
@@ -45,7 +53,17 @@ class LoginHandler(webapp2.RequestHandler):
 
 class RegistrationHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.write('Registration Page')
+        registerHeadTitle = 'Register | Restaurant Management System'
+        template_values = {
+            'HeadTitle': registerHeadTitle,
+            'HeadAuthor': __author__,
+            'SystemName': SystemName,
+            'FooterAuthor': footerAuthor,
+            'AuthorEmail': authorEmail
+        }
+
+        template = JINJA_ENVIRONMENT.get_template('templates/register.html')
+        self.response.write(template.render(template_values))
 
 
 class CustomerPortal(webapp2.RequestHandler):

@@ -21,7 +21,6 @@ import webapp2
 
 import Handlers
 
-
 app = webapp2.WSGIApplication([
                                   ('/status', Handlers.StatusHandler),
                                   ('/', Handlers.LoginHandler),
@@ -29,5 +28,5 @@ app = webapp2.WSGIApplication([
                                   ('/register', Handlers.RegistrationHandler),
                                   ('/customer', Handlers.CustomerPortal),
                                   ('/staff', Handlers.StaffPortal),
-                                  ('/admin', Handlers.ManagerPortal)  # TODO
+                                  ('/manager', Handlers.ManagerPortal)  # TODO
                               ], debug=True)
