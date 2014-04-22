@@ -5,9 +5,8 @@ api_version: 1
 threadsafe: yes
 
 handlers:
-- url: /images/favicon.ico
-  static_files: images/favicon.ico
-  upload: images/favicon.ico
+- url: /images
+  static_dir: images
 
 - url: /foundation
   static_dir: foundation
