@@ -6,11 +6,11 @@
     <![endif]-->
     <meta charset="UTF-8"/>
     <title>Restaurant Management System</title>
-    <meta name="author" content="Aneesh Neelam (11BCE260)"/>
+    <meta name="author" content="Aneesh Neelam (11BCE0260)"/>
     <link href="/images/favicon.ico" rel="icon" type="image/x-icon"/>
     <link rel="stylesheet" type="text/css" href="/foundation/css/foundation.css"/>
     <script type="text/javascript" src="/foundation/js/vendor/modernizr.js"></script>
-    <script type="text/javascript" src="/javascript/register.js"></script>
+    <script type="text/javascript" src="/javascript/first.js"></script>
 </head>
 <body>
 <nav class="top-bar" data-topbar>
@@ -28,55 +28,52 @@
 </nav>
 
 <div class="row" style="text-align: center">
-    <h2>Customer Registration</h2>
+    <h2>Manager Registration</h2>
 </div>
 
-<form action="/login" method="post" name="registrationForm">
+<form action="/login" method="post" name="managerRegistrationForm">
     <div class="row">
         <div class="large-6 columns">
-            <label>Name
-                <input type="text" name="name" placeholder="Your name"/>
+            <label>First Name
+                <input type="text" name="fname" onkeyup="validateForm()" placeholder="The name you call yourself"/>
             </label>
         </div>
+        <div class="large-6 columns">
+            <label>Last Name
+                <input type="text" name="lname" onkeyup="validateForm()" placeholder="Surname or family name"/>
+            </label>
+        </div>
+        <div class="large-12 columns" id="NameError" style="visibility: collapse">
+            <small class="error">Name is not valid</small>
+        </div>
+    </div>
+    <div class="row">
         <div class="large-6 columns">
             <label>Email
-                <input type="email" name="email" placeholder="name@example.com"/>
+                <input type="email" name="email" onkeyup="validateForm()" placeholder="name@example.com"/>
             </label>
         </div>
-    </div>
-    <div class="row">
-
-        <div class="large-6 columns">
-            <label>Payment Options
-                <select name="payment">
-                    <option value="Cash on Delivery">Cash on Delivery</option>
-                </select>
-            </label>
-        </div>
-
         <div class="large-6 columns">
             <label>Phone Number
-                <input type="tel" name="phone" placeholder="1234567890"/>
+                <input type="tel" name="phone" onkeyup="validateForm()" placeholder="1234567890"/>
             </label>
         </div>
-    </div>
-    <div class="row">
-        <div class="large-12 columns">
-            <label>Address
-                <textarea style="resize: none" name="address" placeholder="Address for delivery"></textarea>
-            </label>
+        <div class="large-6 columns" id="EmailError" style="visibility: collapse">
+            <small class="error">Email is not valid</small>
+        </div>
+        <div class="large-6 columns" id="PhoneError" style="visibility: collapse">
+            <small class="error">Phone number is invalid</small>
         </div>
     </div>
     <div class="row">
         <div class="large-6 columns">
             <label>Password
-                <input type="password" name="password" onkeyup="validatePassword()" placeholder="Shh! Secret. "/>
+                <input type="password" name="password" onkeyup="validateForm()" placeholder="Shh! Secret. "/>
             </label>
         </div>
         <div class="large-6 columns">
             <label>Confirm Password
-                <input type="password" name="confirmPassword" onkeyup="validatePassword()"
-                       placeholder="Confirm Secret. "/>
+                <input type="password" name="confirmPassword" onkeyup="validateForm()" placeholder="Confirm Secret. "/>
             </label>
         </div>
         <div class="large-12 columns" id="PasswordError" style="visibility: collapse">
@@ -84,9 +81,9 @@
         </div>
     </div>
     <div class="row" style="text-align: center">
-        <input type="submit" class="button" value="Register">
+        <input type="submit" class="button disabled" id="submit" value="Register">
     </div>
-    <input type="hidden" name="formType" value="register"/>
+    <input type="hidden" name="formName" value="new"/>
 </form>
 
 <footer>
@@ -95,7 +92,7 @@
         <h6 style="text-align: center">Restaurant Management System developed as a <a
                 href="https://sites.google.com/a/vit.ac.in/cse310/">Software
             Engineering</a>
-            Project by <a href="mailto:neelam.aneesh@gmail.com">Aneesh Neelam (11BCE260)</a> of <a
+            Project by <a href="mailto:neelam.aneesh@gmail.com">Aneesh Neelam (11BCE0260)</a> of <a
                     href="http://vit.ac.in/">VIT
                 University</a>.</h6>
     </div>

@@ -1,32 +1,35 @@
 #!/usr/bin/env python
-#
-# Copyright 2007 Google Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
 
 __author__ = 'Aneesh Neelam <neelam.aneesh@gmail.com>'
+SystemName = 'Restaurant Management System'
+EngineName = 'Google App Engine'
+lastUpdated = '26th April, 2014'
+ServerStatus = 'OK'
 
 import webapp2
 
 import Handlers
+import CustomerHandlers
+import StaffHandlers
+import ManagerHandlers
 
 app = webapp2.WSGIApplication([
                                   ('/status', Handlers.StatusHandler),
-                                  ('/', Handlers.LoginHandler),
-                                  ('/portal', Handlers.LoginHandler),
+                                  ('/', Handlers.MainHandler),
+                                  ('/new', Handlers.FirstTimeHandler),
+                                  ('/login', Handlers.LoginHandler),
                                   ('/register', Handlers.RegistrationHandler),
-                                  ('/customer', Handlers.CustomerPortal),
-                                  ('/staff', Handlers.StaffPortal),
-                                  ('/manager', Handlers.ManagerPortal)  # TODO
+                                  ('/customer', CustomerHandlers.CustomerHandler),
+                                  ('/customer/menu', CustomerHandlers.CustomerMenuHandler),
+                                  ('/customer/review', CustomerHandlers.CustomerReviewHandler),
+                                  ('/customer/order', CustomerHandlers.CustomerOrderHandler),
+                                  ('/customer/reserve', CustomerHandlers.CustomerReserveHandler),
+                                  ('/staff', StaffHandlers.StaffHandler),
+                                  ('/staff/order', StaffHandlers.StaffOrderHandler),
+                                  ('/staff/shift', StaffHandlers.StaffShiftHandler),
+                                  ('/manager', ManagerHandlers.ManagerHandler),
+                                  ('/manager/assign', ManagerHandlers.ManagerAssignHandler),
+                                  ('/manager/staff', ManagerHandlers.ManagerStaffHandler),
+                                  ('/manager/report', ManagerHandlers.ManagerReportHandler),
+                                  ('/logout', Handlers.LogoutHandler)
                               ], debug=True)
