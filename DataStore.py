@@ -1,31 +1,30 @@
 __author__ = 'Aneesh Neelam <neelam.aneesh@gmail.com>'
 
-from google.appengine.ext import ndb
+from google.appengine.ext import db
 
 
-class ShiftDetails(ndb.Model):
-    start_time = ndb.DateTimeProperty()
-    end_time = ndb.DateTimeProperty()
-    work = ndb.StringProperty()
+class Staff(db.Model):
+    #shift_key = db.StringProperty(kind=ShiftDetails)
+    email = db.StringProperty()
+    start_time = db.DateTimeProperty()
+    end_time = db.DateTimeProperty()
+    work = db.StringProperty()
 
 
-class Staff(ndb.Model):
-    shift_key = ndb.KeyProperty(kind=ShiftDetails)
+class Customer(db.Model):
+    address = db.StringProperty(required=True)
+    payment_method = db.StringProperty(required=True)
+    email = db.StringProperty()
 
 
-class Customer(ndb.Model):
-    address = ndb.StringProperty(required=True)
-    payment_method = ndb.StringProperty(required=True)
-
-
-class Users(ndb.Model):
-    name = ndb.StringProperty(required=True)
-    email = ndb.StringProperty(required=True)
-    password = ndb.StringProperty(required=True)
-    phone = ndb.StringProperty(required=True)
-    type = ndb.StringProperty(required=True)
-    staff_key = ndb.KeyProperty(kind=Staff)
-    customer_key = ndb.KeyProperty(kind=Customer)
+class Users(db.Model):
+    name = db.StringProperty(required=True)
+    email = db.StringProperty(required=True)
+    password = db.StringProperty(required=True)
+    phone = db.StringProperty(required=True)
+    type = db.StringProperty(required=True)
+    #staff_key = db.StringProperty
+    #customer_key = db.StringProperty()
 
     @classmethod
     def query_Users(cls, email_query):

@@ -1,10 +1,6 @@
 #!/usr/bin/env python
 
 __author__ = 'Aneesh Neelam <neelam.aneesh@gmail.com>'
-SystemName = 'Restaurant Management System'
-EngineName = 'Google App Engine'
-lastUpdated = '26th April, 2014'
-ServerStatus = 'OK'
 
 import webapp2
 

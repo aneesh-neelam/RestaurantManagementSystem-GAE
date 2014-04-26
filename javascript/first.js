@@ -33,7 +33,6 @@ function validateName(fname, lname) {
 
 function validateEmail(email) {
     var emailErrorElt = document.getElementById("EmailError");
-    ;
     var atpos = email.indexOf("@");
     var dotpos = email.lastIndexOf(".");
     if (atpos < 1 || dotpos < atpos + 2 || dotpos + 2 >= email.length) {

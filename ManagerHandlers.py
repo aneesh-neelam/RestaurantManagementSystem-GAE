@@ -5,6 +5,8 @@ import os
 import webapp2
 import jinja2
 
+from gaesessions import get_current_session
+
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -15,6 +17,8 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 class ManagerHandler(webapp2.RequestHandler):
     def get(self):
         template = JINJA_ENVIRONMENT.get_template('templates/manager.html')
+        session = get_current_session()
+        print session
         self.response.write(template.render())
 
 

@@ -1,12 +1,11 @@
 __author__ = 'Aneesh Neelam <neelam.aneesh@gmail.com>'
-lastUpdated = '26th April, 2014'
 
 import os
 
 import webapp2
 import jinja2
+from google.appengine.api import memcache
 
-from gaesessions import get_current_session
 import DataStore
 
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -17,23 +16,23 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 class BaseHandler(webapp2.RequestHandler):
     def checkSession(self):
-        session = get_current_session()
-        if session.is_active():
-            email = session.data['email']
-            user = DataStore.Users.query_Users(email).fetch()
-            for acct in user:
-                if acct.type == "Customer":
-                    self.redirect('/customer')
-                elif acct.type == "Staff":
-                    self.redirect('/staff')
-                elif acct.type == "Manager":
-                    self.redirect('/manager')
+        if memcache.get("email"):
+            users = DataStore.Users.all()
+            for user in users:
+                if (user.email == memcache.get("email")):
+                    acct = user
+            if acct.type == "Customer":
+                self.redirect('/customer')
+            elif acct.type == "Staff":
+                self.redirect('/staff')
+            elif acct.type == "Manager":
+                self.redirect('/manager')
             return True
         else:
             return False
 
     def checkFirstTime(self):
-        manager = DataStore.Users.query().filter(DataStore.Users.type == 'Manager').fetch()
+        manager = DataStore.Users.all()
         count = 0
         for acct in manager:
             count += count + 1
@@ -57,6 +56,7 @@ class BaseHandler(webapp2.RequestHandler):
 class StatusHandler(webapp2.RequestHandler):
     def get(self):
         ServerStatus = 'OK'
+        lastUpdated = '26th April, 2014'
         template_values = {
             'ServerStatus': ServerStatus,
             'lastUpdated': lastUpdated
@@ -85,58 +85,67 @@ class RegistrationHandler(BaseHandler):
 class LoginHandler(webapp2.RequestHandler):
     def post(self):
         formType = self.request.get('formType')
-        user = ""
         if formType == "new":
             email = self.request.get('email')
             passwd = self.request.get('password')
             name = self.request.get('fname') + " " + self.request.get('lname')
             phone = self.request.get('phone')
-            user = DataStore.Users(name=name, password=passwd, email=email, phone=phone, type="Manager")
-            user.put()
+
+            count = 0
+            users = DataStore.Users.all()
+            for user in users:
+                if (user.email == email):
+                    count = count + 1
+            if (count == 0):
+                user = DataStore.Users(name=name, password=passwd, email=email, phone=phone, type="Manager")
+                user.put()
+            else:
+                self.redirect("/")
 
         elif formType == "login":
             email = self.request.get('email')
             passwd = self.request.get('password')
-            user = DataStore.Users.query().filter.query_Users(email).fetch()
+            user = DataStore.Users.all()
             count = 0
             for acct in user:
-                if acct.passwd == passwd and acct.email == email:
+                if acct.password == passwd and acct.email == email:
                     count += 1
-                    user = acct
             if count == 0:
                 self.redirect('/')
 
         elif formType == "register":
             email = self.request.get('email')
             passwd = self.request.get('password')
-            name = self.request.get('fname') + " " + self.request.get('lname')
+            name = self.request.get('name')
             phone = self.request.get('phone')
             address = self.request.get('address')
-            payment_method = self.request.get('paymentMethod')
+            payment_method = self.request.get('payment')
             newCustomer = DataStore.Customer(address=address, payment_method=payment_method)
             newCustomer.put()
             user = DataStore.Users(name=name, password=passwd, email=email, phone=phone, type="Customer",
                                    customer_key=newCustomer.key)
             user.put()
 
-        session = get_current_session()
-        if session.is_active():
-            session.terminate()
-        session.start()
-        session.data['email'] = user.email
-        if user.type == 'Customer':
+        if memcache.get("email"):
+            memcache.delete("email")
+        memcache.set(key="email", value=email, time=1800)
+        print email
+        print "mem" + memcache.get("email")
+        users = DataStore.Users.all()
+        for user in users:
+            if (user.email == memcache.get("email")):
+                acct = user
+        if acct.type == "Customer":
             self.redirect('/customer')
-        elif user.type == 'Manager':
+        elif acct.type == "Staff":
+            self.redirect('/staff')
+        elif acct.type == "Manager":
             self.redirect('/manager')
-        elif user.type == 'Staff':
-            self.redirect('/Staff')
 
 
 class LogoutHandler(webapp2.RequestHandler):
     def get(self):
-        session = get_current_session()
-        if session.is_active():
-            session.terminate()
+        memcache.delete("email")
         self.redirect('/')
 
 
