@@ -36,7 +36,7 @@
 </nav>
 
 <div class="row">
-    <div class="row">
+    <div class="row large-12 columns">
         <h2>Restaurant Reviews</h2>
     </div>
     <ul class="row">
@@ -55,13 +55,13 @@
     </ul>
 </div>
 
-<div class="row">
-    <div class="row">
-        <h2>Provide Feedback</h2>
-    </div>
-</div>
+
 <form action="/customer/process" method="post" name="FeedbackForm">
     <div class="row">
+        <div class="row large-12 columns">
+            <h2>Provide Feedback</h2>
+        </div>
+        <div class="row">
         <div class="large-12 columns">
             <label>Select Rating
                 <select name="rating">
@@ -81,6 +81,7 @@
                           placeholder="Give us your review"></textarea>
             </label>
         </div>
+    </div>
     </div>
     <div class="row" style="text-align: center">
         <input type="submit" class="button" id="submit" value="Post">

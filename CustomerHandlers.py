@@ -10,7 +10,6 @@ from gaesessions import get_current_session
 
 #Using Jinja2 Templating Engine to render HTML views, along with CSS and JavaScript.
 
-
 # This is required to use Jinja2
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),

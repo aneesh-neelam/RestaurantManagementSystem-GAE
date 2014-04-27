@@ -28,6 +28,7 @@ import os
 
 import webapp2
 import jinja2
+from google.appengine.ext import db
 
 from gaesessions import get_current_session
 import DataStore
@@ -197,9 +198,12 @@ class FirstTimeHandler(webapp2.RequestHandler):
             Get request handler for '/new'
             Also adds the sample menuList to database
         """
+        existingItems = DataStore.Menu.all()
+        db.delete(existingItems)
         for item in menuList:
             print item
             newItem = DataStore.Menu(name=item['name'], price=item['price'])
             newItem.put()
+
         template = JINJA_ENVIRONMENT.get_template('templates/first.html')
         self.response.write(template.render())
