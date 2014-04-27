@@ -20,12 +20,12 @@ app = webapp2.WSGIApplication([
                                   ('/customer/review', CustomerHandlers.CustomerReviewHandler),
                                   ('/customer/order', CustomerHandlers.CustomerOrderHandler),
                                   ('/customer/reserve', CustomerHandlers.CustomerReserveHandler),
+                                  ('/customer/process', CustomerHandlers.CustomerProcessHandler),
                                   ('/staff', StaffHandlers.StaffHandler),
-                                  ('/staff/order', StaffHandlers.StaffOrderHandler),
-                                  ('/staff/shift', StaffHandlers.StaffShiftHandler),
                                   ('/manager', ManagerHandlers.ManagerHandler),
                                   ('/manager/assign', ManagerHandlers.ManagerAssignHandler),
                                   ('/manager/staff', ManagerHandlers.ManagerStaffHandler),
                                   ('/manager/report', ManagerHandlers.ManagerReportHandler),
+                                  ('/manager/process', ManagerHandlers.ManagerProcessHandler),
                                   ('/logout', Handlers.LogoutHandler)
                               ], debug=True)

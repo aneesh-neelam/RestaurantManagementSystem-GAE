@@ -4,17 +4,16 @@ from google.appengine.ext import db
 
 
 class Staff(db.Model):
-    #shift_key = db.StringProperty(kind=ShiftDetails)
-    email = db.StringProperty()
-    start_time = db.DateTimeProperty()
-    end_time = db.DateTimeProperty()
-    work = db.StringProperty()
+    email = db.StringProperty(required=True)
+    start_time = db.DateTimeProperty(required=True)
+    end_time = db.DateTimeProperty(required=True)
+    work = db.StringProperty(required=True)
 
 
 class Customer(db.Model):
     address = db.StringProperty(required=True)
     payment_method = db.StringProperty(required=True)
-    email = db.StringProperty()
+    email = db.StringProperty(required=True)
 
 
 class Users(db.Model):
@@ -23,16 +22,25 @@ class Users(db.Model):
     password = db.StringProperty(required=True)
     phone = db.StringProperty(required=True)
     type = db.StringProperty(required=True)
-    #staff_key = db.StringProperty
-    #customer_key = db.StringProperty()
 
-    @classmethod
-    def query_Users(cls, email_query):
-        return cls.query(Users.email == email_query)
 
-    @classmethod
-    def query_Manager(cls):
-        return cls.query(type='Manager')
+class Orders(db.Model):
+    name = db.StringProperty(required=True)
+    email = db.StringProperty(required=True)
+    items = db.StringListProperty(required=True)
+    time = db.DateTimeProperty(auto_now=True)
 
-    def query_Staff(cls):
-        return cls.query(type='Staff')
+
+class Reports(db.Model):
+    rating = db.IntegerProperty(required=True)
+    review = db.StringProperty(required=True)
+    email = db.StringProperty(required=True)
+    time = db.DateTimeProperty(auto_now=True)
+    name = db.StringProperty(required=True)
+
+
+class Reservations(db.Model):
+    name = db.StringProperty(required=True)
+    time = db.DateTimeProperty(required=True)
+    email = db.StringProperty(required=True)
+    number = db.IntegerProperty(required=True)

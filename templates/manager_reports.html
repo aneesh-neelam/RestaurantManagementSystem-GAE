@@ -5,12 +5,11 @@
     <script src="/javascript/compatibility/html5shiv.js"></script>
     <![endif]-->
     <meta charset="UTF-8"/>
-    <title>Staff | Restaurant Management System</title>
+    <title>Manager | Restaurant Management System</title>
     <meta name="author" content="Aneesh Neelam (11BCE0260)"/>
     <link href="/images/favicon.ico" rel="icon" type="image/x-icon"/>
     <link rel="stylesheet" type="text/css" href="/foundation/css/foundation.css"/>
     <script type="text/javascript" src="/foundation/js/vendor/modernizr.js"></script>
-    <script type="text/javascript" src="/javascript/register.js"></script>
 </head>
 <body>
 <nav class="top-bar" data-topbar>
@@ -27,42 +26,28 @@
 
         <!-- Left Nav Section -->
         <ul class="left">
-            <li class="active"><a href="/staff">Staff Overview</a></li>
+            <li><a href="/manager">Overview</a></li>
+            <li><a href="/manager/assign">Assign Staff Duties</a></li>
+            <li><a href="/manager/staff">New Staff Registration</a></li>
+            <li class="active"><a href="/manager/report">View Reports</a></li>
         </ul>
     </section>
 </nav>
 
 <div class="row">
     <div class="row">
-        <h2>Duties</h2>
-    </div>
-    <div class="row">
-        <div class="large-12 columns">
-            <label>Shift starts at: {{ Staff.start_time }}</label><br>
-            <label>Shift ends at: {{ Staff.end_time }}</label><br>
-            <label>Work to be done: </label>
-
-            <p>{{ Staff.work }}</p>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="row">
-        <h2>Pending Orders: </h2>
+        <h2>Customer Reviews: </h2>
     </div>
     <ul class="row">
         <div class="large-12 columns">
-            {% for order in Orders %}
+            {% for review in Reports %}
             <label>At: {{ order.time }}</label><br>
-            <label>Customer Name: {{ order.name }}</label><br>
-            <label>Customer Email: {{ order.email }}</label><br>
-            <label>Order items: </label>
-            <ul class="row">
-                {% for item in order.items %}
-                <li><label>{{ item }}</label></li>
-                {% endfor %}
-            </ul>
+            <label>Customer Name: {{ review.name }}</label><br>
+            <label>Customer Email: {{ review.email }}</label><br>
+            <label>Rating Given: {{ review.rating }} out of 5</label><br>
+            <label>Review: </label>
+
+            <p>{{ review.review }}</p>
             {% endfor %}
         </div>
     </ul>

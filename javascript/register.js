@@ -3,12 +3,12 @@
  */
 
 function validateForm() {
-    var fname = document.forms["managerRegistrationForm"]["fname"].value;
-    var lname = document.forms["managerRegistrationForm"]["fname"].value;
-    var email = document.forms["managerRegistrationForm"]["email"].value;
-    var phone = document.forms["managerRegistrationForm"]["password"].value;
-    var passwd = document.forms["managerRegistrationForm"]["password"].value;
-    var cpasswd = document.forms["managerRegistrationForm"]["confirmPassword"].value;
+    var fname = document.forms["RegistrationForm"]["fname"].value;
+    var lname = document.forms["RegistrationForm"]["fname"].value;
+    var email = document.forms["RegistrationForm"]["email"].value;
+    var phone = document.forms["RegistrationForm"]["password"].value;
+    var passwd = document.forms["RegistrationForm"]["password"].value;
+    var cpasswd = document.forms["RegistrationForm"]["confirmPassword"].value;
     var buttonElt = document.getElementById("submit");
     if (fname.length == 0 || lname.length == 0 || email.length == 0 || phone.length == 0 || passwd.length == 0 || cpasswd.length == 0) {
         buttonElt.className = "button disabled";
