@@ -10,7 +10,7 @@
     <link href="/images/favicon.ico" rel="icon" type="image/x-icon"/>
     <link rel="stylesheet" type="text/css" href="/foundation/css/foundation.css"/>
     <script type="text/javascript" src="/foundation/js/vendor/modernizr.js"></script>
-    <script type="text/javascript" src="/javascript/register.js"></script>
+    <script type="text/javascript" src="/javascript/customerRegister.js"></script>
 </head>
 <body>
 <nav class="top-bar" data-topbar>
@@ -54,15 +54,11 @@
     <ul class="row">
         <div class="large-12 columns">
             {% for order in Orders %}
-            <label>At: {{ order.time }}</label><br>
-            <label>Customer Name: {{ order.name }}</label><br>
-            <label>Customer Email: {{ order.email }}</label><br>
-            <label>Order items: </label>
-            <ul class="row">
-                {% for item in order.items %}
-                <li><label>{{ item }}</label></li>
-                {% endfor %}
-            </ul>
+            <label>At: {{ order.time }}</label>
+            <label>Customer Name: {{ order.name }}</label>
+            <label>Customer Email: {{ order.email }}</label>
+            <label>Order items: {{ order.items }}</label>
+            <br>
             {% endfor %}
         </div>
     </ul>

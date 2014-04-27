@@ -36,18 +36,18 @@
 
 <div class="row">
     <div class="row">
-        <h2>Customer Reviews: </h2>
+        <h2>Customer Reviews</h2>
     </div>
     <ul class="row">
         <div class="large-12 columns">
             {% for review in Reports %}
-            <label>At: {{ order.time }}</label><br>
-            <label>Customer Name: {{ review.name }}</label><br>
-            <label>Customer Email: {{ review.email }}</label><br>
-            <label>Rating Given: {{ review.rating }} out of 5</label><br>
+            <label>At: {{ review.time }}</label>
+            <label>Customer Name: {{ review.name }}</label>
+            <label>Customer Email: {{ review.email }}</label>
+            <label>Rating Given: {{ review.rating }} out of 5</label>
             <label>Review: </label>
-
             <p>{{ review.review }}</p>
+            <br>
             {% endfor %}
         </div>
     </ul>

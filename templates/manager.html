@@ -10,7 +10,7 @@
     <link href="/images/favicon.ico" rel="icon" type="image/x-icon"/>
     <link rel="stylesheet" type="text/css" href="/foundation/css/foundation.css"/>
     <script type="text/javascript" src="/foundation/js/vendor/modernizr.js"></script>
-    <script type="text/javascript" src="/javascript/register.js"></script>
+    <script type="text/javascript" src="/javascript/customerRegister.js"></script>
 </head>
 <body>
 <nav class="top-bar" data-topbar>
@@ -35,6 +35,31 @@
     </section>
 </nav>
 
+<div class="row">
+    <div class="row">
+        <h2>Staff List</h2>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            {% for staff in Staff %}
+            <label>{{ staff.name }}</label><br>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="row">
+        <h2>Customer List</h2>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            {% for customer in Customer %}
+            <label>{{ customer.name }}</label><br>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 
 <footer>
     <div class="large-12 columns">

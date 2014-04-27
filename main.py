@@ -9,6 +9,10 @@ import CustomerHandlers
 import StaffHandlers
 import ManagerHandlers
 
+# Main file, execution starts here.
+# All URL Handlers are declared here
+# Each URL's specific handler is defined in the respective files
+
 app = webapp2.WSGIApplication([
                                   ('/status', Handlers.StatusHandler),
                                   ('/', Handlers.MainHandler),

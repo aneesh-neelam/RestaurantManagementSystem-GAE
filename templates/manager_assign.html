@@ -10,7 +10,7 @@
     <link href="/images/favicon.ico" rel="icon" type="image/x-icon"/>
     <link rel="stylesheet" type="text/css" href="/foundation/css/foundation.css"/>
     <script type="text/javascript" src="/foundation/js/vendor/modernizr.js"></script>
-    <script type="text/javascript" src="/javascript/register.js"></script>
+    <script type="text/javascript" src="/javascript/customerRegister.js"></script>
 </head>
 <body>
 <nav class="top-bar" data-topbar>
@@ -27,13 +27,73 @@
 
         <!-- Left Nav Section -->
         <ul class="left">
-            <li class="active"><a href="/manager">Overview</a></li>
-            <li><a href="/manager/assign">Assign Staff Duties</a></li>
+            <li><a href="/manager">Overview</a></li>
+            <li class="active"><a href="/manager/assign">Assign Staff Duties</a></li>
             <li><a href="/manager/staff">New Staff Registration</a></li>
             <li><a href="/manager/report">View Reports</a></li>
         </ul>
     </section>
 </nav>
+
+<div class="row" style="text-align: center">
+    <h2>Assign Duties</h2>
+</div>
+
+<form action="/manager/process" method="post" name="AssignmentForm">
+    <div class="row">
+        <div class="large-12 columns">
+            <label>Staff Member
+                <select name="staff_email">
+                    {% for user in Staff %}
+                    <option value="{{user.email}}">{{user.name}}</option>
+                    {% endfor %}
+                </select>
+            </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-6 columns">
+            <label>Shift Start
+                <select name="start_time">
+                    <option value="8:00">8:00</option>
+                    <option value="9:00">9:00</option>
+                    <option value="10:00">10:00</option>
+                    <option value="11:00">11:00</option>
+                    <option value="12:00">12:00</option>
+                    <option value="13:00">13:00</option>
+                    <option value="14:00">14:00</option>
+                    <option value="15:00">15:00</option>
+                </select>
+            </label>
+        </div>
+        <div class="large-6 columns">
+            <label>Shift End
+                <select name="end_time">
+                    <option value="16:00">16:00</option>
+                    <option value="17:00">17:00</option>
+                    <option value="18:00">18:00</option>
+                    <option value="19:00">19:00</option>
+                    <option value="20:00">20:00</option>
+                    <option value="21:00">21:00</option>
+                    <option value="22:00">22:00</option>
+                    <option value="23:00">23:00</option>
+                </select>
+            </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <label>Work
+                <textarea style="resize: none" name="work"
+                          placeholder="Duty Assignment"></textarea>
+            </label>
+        </div>
+    </div>
+    <div class="row" style="text-align: center">
+        <input type="submit" class="button" id="submit" value="Post">
+    </div>
+    <input type="hidden" name="formType" value="assign"/>
+</form>
 
 <footer>
     <div class="large-12 columns">

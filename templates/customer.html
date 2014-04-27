@@ -10,7 +10,6 @@
     <link href="/images/favicon.ico" rel="icon" type="image/x-icon"/>
     <link rel="stylesheet" type="text/css" href="/foundation/css/foundation.css"/>
     <script type="text/javascript" src="/foundation/js/vendor/modernizr.js"></script>
-    <script type="text/javascript" src="/javascript/register.js"></script>
 </head>
 <body>
 <nav class="top-bar" data-topbar>
@@ -35,6 +34,33 @@
         </ul>
     </section>
 </nav>
+
+<div class="row">
+    <div class="row">
+        <h2>Pending Orders: </h2>
+    </div>
+    <ul class="row">
+        <div class="large-12 columns">
+            {% for order in Order %}
+            <label>At: {{order.time}}</label>
+            <label>Order items: {{order['items']}}</label>
+            <br>
+            {% endfor %}
+        </div>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="row">
+        <h2>Reservation</h2>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <label>Reservation at: {{ Reservation.time }} from {{ Reservation.time_reservation }}</label>
+            <label>Number of people: {{ Reservation.number }}</label>
+        </div>
+    </div>
+</div>
 
 <footer>
     <div class="large-12 columns">

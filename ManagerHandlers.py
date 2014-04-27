@@ -17,15 +17,34 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 class ManagerHandler(webapp2.RequestHandler):
     def get(self):
+        """
+            Get Request handler for '/manager'
+        """
         session = get_current_session()
         if session['type'] != "Manager":
             self.redirect('/')
+        Users = DataStore.Users.all()
+        Staff = []
+        Customer = []
+        for user in Users:
+            if user.type == "Staff":
+                Staff.append(user)
+            elif user.type == "Customer":
+                Customer.append(user)
+        template_values = {
+            'Staff': Staff,
+            'Customer': Customer
+
+        }
         template = JINJA_ENVIRONMENT.get_template('templates/manager.html')
-        self.response.write(template.render())
+        self.response.write(template.render(template_values))
 
 
 class ManagerAssignHandler(webapp2.RequestHandler):
     def get(self):
+        """
+            Get Request handler for '/manager/assign'
+        """
         session = get_current_session()
         if session['type'] != "Manager":
             self.redirect('/')
@@ -44,6 +63,9 @@ class ManagerAssignHandler(webapp2.RequestHandler):
 
 class ManagerStaffHandler(webapp2.RequestHandler):
     def get(self):
+        """
+            Get Request handler for '/manager/staff'
+        """
         session = get_current_session()
         if session['type'] != "Manager":
             self.redirect('/')
@@ -54,6 +76,9 @@ class ManagerStaffHandler(webapp2.RequestHandler):
 
 class ManagerReportHandler(webapp2.RequestHandler):
     def get(self):
+        """
+            Get Request handler for '/manager/reports'
+        """
         session = get_current_session()
         if session['type'] != "Manager":
             self.redirect('/')
@@ -68,31 +93,48 @@ class ManagerReportHandler(webapp2.RequestHandler):
 
 class ManagerProcessHandler(webapp2.RequestHandler):
     def post(self):
-        formType = self.request.get('formType')
-        if formType == "new_staff":
+        """
+            Post Request handlers for all manager related form submissions
+        """
+        form_type = self.request.get('formType')
+        if form_type == "new_staff":
             email = self.request.get('email')
-            passwd = self.request.get('password')
-            name = self.request.get('fname') + " " + self.request.get('lname')
+            password = self.request.get('password')
+            fname = self.request.get('fname')
+            lname = self.request.get('lname')
+            name = fname + " " + lname
             phone = self.request.get('phone')
-
             count = 0
             users = DataStore.Users.all()
             for user in users:
                 if user.email == email:
                     count += 1
             if count == 0:
-                user = DataStore.Users(name=name, password=passwd, email=email, phone=phone, type="Staff")
+                user = DataStore.Users(name=name, password=password, email=email, phone=phone, type="Staff")
                 user.put()
+                self.redirect("/manager")
             else:
                 self.redirect("/manager")
 
-        elif formType == "assign":
-            staff_email = self.request.get('start_time')
+        elif form_type == "assign":
+            staff_email = self.request.get('staff_email')
             start_time = self.request.get('start_time')
             end_time = self.request.get('end_time')
             work = self.request.get('work')
             staff_members = DataStore.Staff.all()
             count = 0
             for user in staff_members:
-                duties = DataStore.Staff(start_time=start_time, end_time=end_time, work=work)
+                if user.email == staff_email:
+                    count += 1
+            if count == 0:
+                duties = DataStore.Staff(email=staff_email, start_time=start_time, end_time=end_time, work=work)
+                duties.put()
+            else:
+                for duties in staff_members:
+                    if duties.email == staff_email:
+                        duties.start_time = start_time
+                        duties.end_time = end_time
+                        duties.work = work
+                        duties.put()
+
             self.redirect('/manager')
