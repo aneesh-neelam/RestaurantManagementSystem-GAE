@@ -11,11 +11,11 @@ class Staff(db.Model):
     email = db.StringProperty(required=True)
     start_time = db.StringProperty(required=True)
     end_time = db.StringProperty(required=True)
-    work = db.StringProperty(required=True)
+    work = db.StringProperty(required=True, multiline=True)
 
 
 class Customer(db.Model):
-    address = db.StringProperty(required=True)
+    address = db.StringProperty(required=True, multiline=True)
     payment_method = db.StringProperty(required=True)
     email = db.StringProperty(required=True)
 
@@ -37,7 +37,7 @@ class Orders(db.Model):
 
 class Reports(db.Model):
     rating = db.IntegerProperty(required=True)
-    review = db.StringProperty(required=True)
+    review = db.StringProperty(multiline=True)
     email = db.StringProperty(required=True)
     time = db.DateTimeProperty(auto_now=True)
     name = db.StringProperty(required=True)

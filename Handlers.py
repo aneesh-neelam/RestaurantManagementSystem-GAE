@@ -114,31 +114,38 @@ class LoginHandler(webapp2.RequestHandler):
         """
         form_type = self.request.get('formType')
         session = get_current_session()
+        user = None
+        flag = False
         if form_type == "new":
             email = self.request.get('email')
             password = self.request.get('password')
             name = self.request.get('fname') + " " + self.request.get('lname')
             phone = self.request.get('phone')
-
-            count = 0
-            users = DataStore.Users.all()
-            for user in users:
-                if user.email == email:
-                    count += 1
-            if count == 0:
-                user = DataStore.Users(name=name, password=password, email=email, phone=phone, type="Manager")
-                user.put()
-            else:
+            if email == "" or password == "" or name == "" or phone == "":
                 self.redirect("/")
+            else:
+                count = 0
+                users = DataStore.Users.all()
+                for user in users:
+                    if user.email == email:
+                        count += 1
+                if count == 0:
+                    user = DataStore.Users(name=name, password=password, email=email, phone=phone, type="Manager")
+                    user.put()
+                    flag = True
+                else:
+                    self.redirect("/")
 
         elif form_type == "login":
             email = self.request.get('email')
             password = self.request.get('password')
             users = DataStore.Users.all()
             count = 0
-            for user in users:
-                if user.password == password and user.email == email:
+            for u in users:
+                if u.password == password and u.email == email:
                     count += 1
+                    flag = True
+                    user = u
             if count == 0:
                 self.redirect('/')
 
@@ -151,34 +158,36 @@ class LoginHandler(webapp2.RequestHandler):
             payment_method = self.request.get('payment')
             count = 0
             users = DataStore.Users.all()
-            for user in users:
-                if user.email == email:
-                    count += 1
-            if count == 0:
-                new_customer = DataStore.Customer(email=email, address=address, payment_method=payment_method)
-                new_customer.put()
-                user = DataStore.Users(name=name, password=password, email=email, phone=phone, type="Customer")
-                user.put()
+            if email == "" or password == "" or address == "" or name == "" or phone == "":
+                self.redirect("/register")
             else:
+                for u in users:
+                    if u.email == email:
+                        count += 1
+                        user = u
+                if count == 0:
+                    new_customer = DataStore.Customer(email=email, address=address, payment_method=payment_method)
+                    new_customer.put()
+                    user = DataStore.Users(name=name, password=password, email=email, phone=phone, type="Customer")
+                    user.put()
+                    flag = True
+                else:
+                    self.redirect("/")
+
+        if flag:
+            if session.is_active():
+                session.terminate()
+            if user is None:
                 self.redirect("/")
-
-        if session.is_active():
-            session.terminate()
-
-        users = DataStore.Users.all()
-        for u in users:
-            if u.email == email:
-                user = u
-
-        session['name'] = user.name
-        session['email'] = user.email
-        session['type'] = user.type
-        if user.type == "Customer":
-            self.redirect('/customer')
-        elif user.type == "Staff":
-            self.redirect('/staff')
-        elif user.type == "Manager":
-            self.redirect('/manager')
+            session['name'] = user.name
+            session['email'] = user.email
+            session['type'] = user.type
+            if user.type == "Customer":
+                self.redirect('/customer')
+            elif user.type == "Staff":
+                self.redirect('/staff')
+            elif user.type == "Manager":
+                self.redirect('/manager')
 
 
 class LogoutHandler(webapp2.RequestHandler):

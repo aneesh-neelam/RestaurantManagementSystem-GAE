@@ -105,36 +105,41 @@ class ManagerProcessHandler(webapp2.RequestHandler):
             name = fname + " " + lname
             phone = self.request.get('phone')
             count = 0
-            users = DataStore.Users.all()
-            for user in users:
-                if user.email == email:
-                    count += 1
-            if count == 0:
-                user = DataStore.Users(name=name, password=password, email=email, phone=phone, type="Staff")
-                user.put()
-                self.redirect("/manager")
+            if email == "" or password == "" or fname == "" or lname == "" or phone == "":
+                self.redirect("/manager/staff")
             else:
-                self.redirect("/manager")
+                users = DataStore.Users.all()
+                for user in users:
+                    if user.email == email:
+                        count += 1
+                if count == 0:
+                    user = DataStore.Users(name=name, password=password, email=email, phone=phone, type="Staff")
+                    user.put()
+                    self.redirect("/manager")
+                else:
+                    self.redirect("/manager/staff")
 
         elif form_type == "assign":
             staff_email = self.request.get('staff_email')
             start_time = self.request.get('start_time')
             end_time = self.request.get('end_time')
             work = self.request.get('work')
-            staff_members = DataStore.Staff.all()
-            count = 0
-            for user in staff_members:
-                if user.email == staff_email:
-                    count += 1
-            if count == 0:
-                duties = DataStore.Staff(email=staff_email, start_time=start_time, end_time=end_time, work=work)
-                duties.put()
+            if work == "":
+                self.redirect("/manager/assign")
             else:
-                for duties in staff_members:
-                    if duties.email == staff_email:
-                        duties.start_time = start_time
-                        duties.end_time = end_time
-                        duties.work = work
-                        duties.put()
-
-            self.redirect('/manager')
+                staff_members = DataStore.Staff.all()
+                count = 0
+                for user in staff_members:
+                    if user.email == staff_email:
+                        count += 1
+                if count == 0:
+                    duties = DataStore.Staff(email=staff_email, start_time=start_time, end_time=end_time, work=work)
+                    duties.put()
+                else:
+                    for duties in staff_members:
+                        if duties.email == staff_email:
+                            duties.start_time = start_time
+                            duties.end_time = end_time
+                            duties.work = work
+                            duties.put()
+                self.redirect('/manager')
