@@ -20,7 +20,7 @@ function validateForm() {
 
 function validateName(fname, lname) {
     var NameErrorElt = document.getElementById("NameError");
-    var nameRegEx = new RegExp("\\w");
+    var nameRegEx = new RegExp("[A-Za-z]");
     if (nameRegEx.test(fname) && nameRegEx.test(lname)) {
         NameErrorElt.style.visibility = "collapse";
         return true;
@@ -48,7 +48,7 @@ function validateEmail(email) {
 function validatePhone(phone) {
 
     var phoneErrorElt = document.getElementById("PhoneError");
-    var phoneRegEx = new RegExp("\\d", "g");
+    var phoneRegEx = new RegExp("[0-9]");
     if (phoneRegEx.test(phone)) {
         phoneErrorElt.style.visibility = "collapse";
         return true;

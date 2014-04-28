@@ -210,7 +210,6 @@ class FirstTimeHandler(webapp2.RequestHandler):
         existingItems = DataStore.Menu.all()
         db.delete(existingItems)
         for item in menuList:
-            print item
             newItem = DataStore.Menu(name=item['name'], price=item['price'])
             newItem.put()
 
